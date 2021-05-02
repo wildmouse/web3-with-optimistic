@@ -16,12 +16,12 @@ async function readOnChainData() {
   // Create an instance of an ethers.js Contract
   // Read more about ethers.js on https://docs.ethers.io/v5/api/contract/contract/
   // const provider = new JsonRpcProvider("https://kovan.optimistic.io" )
-  const provider = new JsonRpcProvider("http://127.0.0.1:8545") // optimism url
+  const provider = new JsonRpcProvider("https://kovan.optimism.io") // optimism url
   // Deployed address on local optimistic network
-  const ceaErc20 = new Contract("0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154", abis.erc20, provider);
+  const ceaErc20 = new Contract("0x89fE6e45a13Ca308bc66006DccB4399a2fE7FcDC", abis.erc20, provider);
   // A pre-defined address that owns some CEAERC20 tokens
   // test account address
-  const tokenBalance = await ceaErc20.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+  const tokenBalance = await ceaErc20.balanceOf("0x84d800DaE0Bdb31A4DE9918782bffCc8D041c1b8");
   console.log({ tokenBalance: tokenBalance.toString() });
 }
 
