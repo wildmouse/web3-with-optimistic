@@ -1,6 +1,6 @@
 import React from "react";
 import { Contract } from "@ethersproject/contracts";
-import { getDefaultProvider } from "@ethersproject/providers";
+import {getDefaultProvider, JsonRpcProvider, Web3Provider} from "@ethersproject/providers";
 import { useQuery } from "@apollo/react-hooks";
 
 import { Body, Button, Header, Image, Link } from "./components";
@@ -15,9 +15,13 @@ async function readOnChainData() {
   const defaultProvider = getDefaultProvider();
   // Create an instance of an ethers.js Contract
   // Read more about ethers.js on https://docs.ethers.io/v5/api/contract/contract/
-  const ceaErc20 = new Contract(addresses.ceaErc20, abis.erc20, defaultProvider);
+  // const provider = new JsonRpcProvider("https://kovan.optimistic.io" )
+  const provider = new JsonRpcProvider("http://127.0.0.1:8545") // optimism url
+  // Deployed address on local optimistic network
+  const ceaErc20 = new Contract("0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154", abis.erc20, provider);
   // A pre-defined address that owns some CEAERC20 tokens
-  const tokenBalance = await ceaErc20.balanceOf("0x3f8CB69d9c0ED01923F11c829BaE4D9a4CB6c82C");
+  // test account address
+  const tokenBalance = await ceaErc20.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
   console.log({ tokenBalance: tokenBalance.toString() });
 }
 
@@ -58,7 +62,7 @@ function App() {
           Edit <code>packages/react-app/src/App.js</code> and save to reload.
         </p>
         {/* Remove the "hidden" prop and open the JavaScript console in the browser to see what this function does */}
-        <Button hidden onClick={() => readOnChainData()}>
+        <Button onClick={() => readOnChainData()}>
           Read On-Chain Balance
         </Button>
         <Link href="https://ethereum.org/developers/#getting-started" style={{ marginTop: "8px" }}>
